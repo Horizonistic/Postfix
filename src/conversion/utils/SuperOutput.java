@@ -6,7 +6,7 @@ package conversion.utils;
  *
  * @author Richard Stegman
  * @author Horizonistic
- * @version 1.1.3
+ * @version 1.1.4
  */
 import java.io.*;
 public class SuperOutput {
@@ -29,14 +29,17 @@ public class SuperOutput {
     /**
      * Forwards a string of format specifiers and varargs
      * to two printf statements
-     * @param string  the string to print
-     * @param args  arguments to pass to print
+     * @param args  each item to print
      */
-    public void print(String string, Object... args) {
+
+    public void print(Object... args) {
         if (pw == null)
             return;
-        System.out.printf(string, args);
-        pw.printf(string, args);
+        for (Object arg : args)
+        {
+            System.out.print(arg);
+            pw.print(arg);
+        }
     }
 
     /**
@@ -52,39 +55,45 @@ public class SuperOutput {
 
     /**
      * Same as this.print(), only prints on its own line
-     * @param string the string to print
      * @param args  arguments to pass to print
      */
-    public void println(String string, Object... args) {
+    public void println(Object... args) {
         if (pw == null)
             return;
-        System.out.printf("\n" + string, args);
-        pw.printf("\n" + string, args);
+        for (Object arg : args)
+        {
+            System.out.printf("\n" + arg);
+            pw.printf("\n" + arg);
+        }
     }
 
     /**
      * Forwards a string of format specifiers and varargs
      * to just the file. This is used for echoing items
      * the user may have input.
-     * @param string the string to print
      * @param args  arguments to pass to print
      */
-    public void printFile(String string, Object... args) {
+    public void printFile(Object... args) {
         if (pw == null)
             return;
-        pw.printf(string, args);
+        for (Object arg : args)
+        {
+            pw.print(arg);
+        }
     }
 
     /**
      * The same as this.printFile(), only prints on its own line
      *
-     * @param string the string to print
      * @param args  arguments to pass to print
      */
-    public void printlnFile(String string, Object... args) {
+    public void printlnFile(Object... args) {
         if (pw == null)
             return;
-        pw.printf("\n" + string, args);
+        for (Object arg : args)
+        {
+            pw.printf("\n" + arg);
+        }
     }
 
     /**
