@@ -13,12 +13,20 @@ public class Driver
         Postfix postfix = new Postfix(new SuperOutput("csis.txt"));
 
         BufferedReader br;
-        br = new BufferedReader(new FileReader("input.txt"));
+        try
+        {
+            br = new BufferedReader(new FileReader("input.txt"));
+        }
+        catch (FileNotFoundException e)
+        {
+            System.err.println("File \"input.txt\" not found or cannot be opened.");
+            return;
+
+        }
         String line;
         while ((line = br.readLine()) != null)
         {
             postfix.toPostfix(line);
         }
-        //postfix.toPostfix("3 * ( 5 * ( 5 - 2 ) ) - 9");
     }
 }

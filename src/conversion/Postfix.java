@@ -57,7 +57,7 @@ public class Postfix
     {
         do
         {
-            this.so.outputln("Please enter an infix-formatted expression (enter \"skip\" to skip): ");
+            this.so.println("Please enter an infix-formatted expression (enter \"skip\" to skip): ");
             if (this.in.hasNextLine())
             {
                 String input = this.in.nextLine();
@@ -65,14 +65,14 @@ public class Postfix
                 {
                     if (input.replaceAll("[[0-9]\\s\\(\\)\\+\\-\\*\\/]", "").length() == 0)
                     {
-                        this.so.outputlnFile(input);
+                        this.so.printlnFile(input);
                         input = input.replaceAll("\\s", "");
                         this.infix = input;
                         return;
                     }
                     else
                     {
-                        this.so.outputln("That contained invalid characters.  Enter \"skip\" to skip.");
+                        this.so.println("That contained invalid characters.  Enter \"skip\" to skip.");
                     }
                 }
                 else
@@ -82,7 +82,7 @@ public class Postfix
             }
             else
             {
-                this.so.outputln("That was not a valid string.  Please try again or enter \"skip\" to skip.");
+                this.so.println("That was not a valid string.  Please try again or enter \"skip\" to skip.");
                 this.in.nextLine();
             }
         } while (true);
@@ -157,59 +157,47 @@ public class Postfix
         for (int i = 0; i < this.postfix.length(); i++)
         {
             c = this.postfix.charAt(i);
-            so.outputln(Character.toString(c));
             if (Character.isDigit(c))
             {
                 operands.push(Character.getNumericValue(c));
             }
             else if (this.operators.containsKey(c))
             {
-                so.outputln(String.valueOf(c));
                 op2 = operands.pop();
                 op1 = operands.pop();
                 switch (c)
                 {
                     case '^':
-                        operands.dump();
                         operands.push((int) (Math.pow(op2, op1)));
-                        operands.dump();
                         break;
 
                     case '*':
-                        operands.dump();
-                        operands.push(op2 * op1);
-                        operands.dump();
+                        operands.push(op1 * op2);
                         break;
 
                     case '/':
-                        operands.dump();
-                        operands.push(op2 / op1);
-                        operands.dump();
+                        operands.push(op1 / op2);
                         break;
 
                     case '-':
-                        operands.dump();
-                        operands.push(op2 - op1);
-                        operands.dump();
+                        operands.push(op1 - op2);
                         break;
 
                     case '+':
-                        operands.dump();
-                        operands.push(op2 + op1);
-                        operands.dump();
+                        operands.push(op1 + op2);
                         break;
                     default:
-                        so.outputln("WHAT");
+                        so.println("WHAT");
                         break;
                 }
             }
-            so.outputln();
+            so.println();
         }
         this.eval = operands.pop();
 
-        so.outputln(String.valueOf(this.eval));
-        so.outputln("---------------------");
-        so.outputln();
+        so.println(String.valueOf(this.eval));
+        so.println("---------------------");
+        so.println();
     }
 
     /**
@@ -217,6 +205,6 @@ public class Postfix
      */
     private void outputPostfix()
     {
-        so.outputln(this.postfix);
+        so.println(this.postfix);
     }
 }
