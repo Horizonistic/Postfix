@@ -32,7 +32,7 @@ public class SuperOutput {
      * @param string  the string to print
      * @param args  arguments to pass to print
      */
-    public void output(String string, Object... args) {
+    public void print(String string, Object... args) {
         if (pw == null)
             return;
         System.out.printf(string, args);
@@ -42,7 +42,7 @@ public class SuperOutput {
     /**
      * Outputs solely a newline character to the console and the file
      */
-    public void outputln()
+    public void println()
     {
         if (pw == null)
             return;
@@ -51,11 +51,11 @@ public class SuperOutput {
     }
 
     /**
-     * Same as this.output(), only prints on its own line
+     * Same as this.print(), only prints on its own line
      * @param string the string to print
      * @param args  arguments to pass to print
      */
-    public void outputln(String string, Object... args) {
+    public void println(String string, Object... args) {
         if (pw == null)
             return;
         System.out.printf("\n" + string, args);
@@ -69,19 +69,19 @@ public class SuperOutput {
      * @param string the string to print
      * @param args  arguments to pass to print
      */
-    public void outputFile(String string, Object... args) {
+    public void printFile(String string, Object... args) {
         if (pw == null)
             return;
         pw.printf(string, args);
     }
 
     /**
-     * The same as this.outputFile(), only prints on its own line
+     * The same as this.printFile(), only prints on its own line
      *
      * @param string the string to print
      * @param args  arguments to pass to print
      */
-    public void outputlnFile(String string, Object... args) {
+    public void printlnFile(String string, Object... args) {
         if (pw == null)
             return;
         pw.printf("\n" + string, args);
@@ -90,7 +90,7 @@ public class SuperOutput {
     /**
      * Outputs solely a newline character to the file
      */
-    public void outputlnFile() {
+    public void printlnFile() {
         if (pw == null)
             return;
         pw.printf("\n");
