@@ -171,7 +171,7 @@ public class Postfix
                 {
                     case '^':
                         operands.dump();
-                        operands.push(Integer.valueOf(Double.toString(Math.pow(op2, op1))));
+                        operands.push((int) (Math.pow(op2, op1)));
                         operands.dump();
                         break;
 
