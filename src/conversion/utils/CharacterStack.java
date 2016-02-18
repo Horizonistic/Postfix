@@ -5,7 +5,7 @@ package conversion.utils;
  *
  * @author Richard Stegman
  * @author Horizonistic
- * @version 1.0
+ * @version 1.1
  */
 public class CharacterStack
 {
