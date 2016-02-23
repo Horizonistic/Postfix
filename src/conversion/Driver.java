@@ -1,6 +1,7 @@
 package conversion;
 
 import conversion.utils.SuperOutput;
+
 import java.io.*;
 
 /**
@@ -10,8 +11,6 @@ public class Driver
 {
     public static void main(String[] args) throws IOException
     {
-        Postfix postfix = new Postfix(new SuperOutput("csis.txt"));
-
         BufferedReader br;
         try
         {
@@ -21,12 +20,18 @@ public class Driver
         {
             System.err.println("File \"input.txt\" not found or cannot be opened.");
             return;
-
         }
+
+        SuperOutput so = new SuperOutput("csis.txt");
+        Postfix postfix = new Postfix(so);
+
         String line;
         while ((line = br.readLine()) != null)
         {
-            postfix.toPostfix(line);
+            //so.print(1.0001 + 100, "test");
+            //postfix.toPostfix(line);
         }
+
+        postfix.toPostfix("12^3*4-56/78+/+");
     }
 }
