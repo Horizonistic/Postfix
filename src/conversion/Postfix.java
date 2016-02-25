@@ -1,7 +1,6 @@
 package conversion;
 
-import conversion.utils.CharacterStack;
-import conversion.utils.IntegerStack;
+import conversion.utils.ObjectStack;
 import conversion.utils.SuperOutput;
 
 import java.util.HashMap;
@@ -20,7 +19,6 @@ public class Postfix
     private Scanner in = new Scanner(System.in);
     private String infix;
     private String postfix;
-    private String prefix;
     private int eval;
     private Map<Character, Integer> operators = new HashMap<Character, Integer>()
     {{
@@ -43,7 +41,7 @@ public class Postfix
      */
     public boolean toPostfix(String input)
     {
-        this.postfix = input;
+        this.infix = input;
         //this.inputInfix();
         this.infixToPostfix();
         this.printPostfix();
@@ -98,7 +96,7 @@ public class Postfix
         this.postfix = "";
         char c;
         int priority;
-        CharacterStack opStack = new CharacterStack();
+        ObjectStack opStack = new ObjectStack();
         this.infix = this.infix.replaceAll("[\\s]", "");
 
         for (int i = 0; i < this.infix.length(); i++)
@@ -110,11 +108,11 @@ public class Postfix
 
                 if (c == ')')
                 {
-                    while (!opStack.isEmpty() && opStack.top() != '(')
+                    while (!opStack.isEmpty() && ((char) opStack.top() != '('))
                     {
                         this.postfix += opStack.pop();
                     }
-                    if (!opStack.isEmpty() && opStack.top() == '(')
+                    if (!opStack.isEmpty() && ((char) opStack.top() == '('))
                     {
                         opStack.pop();
                     }
@@ -129,7 +127,7 @@ public class Postfix
                 }
                 else if (priority >= this.operators.get(opStack.top()))
                 {
-                    while (!opStack.isEmpty() && priority >= this.operators.get(opStack.top()) && opStack.top() != '(')
+                    while (!opStack.isEmpty() && priority >= this.operators.get(opStack.top()) && ((char) opStack.top() != '('))
                     {
                         this.postfix += opStack.pop();
                     }
@@ -157,7 +155,7 @@ public class Postfix
         int op1;
         int op2;
         char c;
-        IntegerStack operands = new IntegerStack();
+        ObjectStack operands = new ObjectStack();
 
         for (int i = 0; i < this.postfix.length(); i++)
         {
@@ -168,8 +166,8 @@ public class Postfix
             }
             else if (this.operators.containsKey(c))
             {
-                op2 = operands.pop();
-                op1 = operands.pop();
+                op2 = (int) operands.pop();
+                op1 = (int) operands.pop();
                 switch (c)
                 {
                     case '^':
@@ -197,7 +195,7 @@ public class Postfix
                 }
             }
         }
-        this.eval = operands.pop();
+        this.eval = (int) operands.pop();
     }
 
     /**
