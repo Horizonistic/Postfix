@@ -28,10 +28,7 @@ public class Driver
         String line;
         while ((line = br.readLine()) != null)
         {
-            //so.print(1.0001 + 100, "test");
-            //postfix.toPostfix(line);
+            postfix.toPostfix(line);
         }
-
-        postfix.toPostfix("12^3*4-56/78+/+");
     }
 }

@@ -45,11 +45,10 @@ public class Postfix
     {
         this.postfix = input;
         //this.inputInfix();
-        //this.infixToPostfix();
-        //this.printPostfix();
-        this.postfixToPrefix();
-        //this.evalPostfix();
-        //this.printEval();
+        this.infixToPostfix();
+        this.printPostfix();
+        this.evalPostfix();
+        this.printEval();
         return true;
     }
 
@@ -152,124 +151,6 @@ public class Postfix
     /**
      *
      */
-    private void infixToPrefix()
-    {
-        this.postfix = "";
-        char c;
-        int priority;
-        CharacterStack opStack = new CharacterStack();
-        this.infix = this.infix.replaceAll("[\\s]", "");
-
-        for (int i = this.infix.length() - 1; i >= 0; i--)
-        {
-            c = this.infix.charAt(i);
-            if (this.operators.containsKey(c))
-            {
-                priority = this.operators.get(c);
-
-                if (c == '(')
-                {
-                    while (!opStack.isEmpty() && opStack.top() != ')')
-                    {
-                        this.postfix += opStack.pop();
-                    }
-                    if (!opStack.isEmpty() && opStack.top() == ')')
-                    {
-                        opStack.pop();
-                    }
-                }
-                else if (opStack.isEmpty())
-                {
-                    opStack.push(c);
-                }
-                else if (priority < this.operators.get(opStack.top()))
-                {
-                    opStack.push(c);
-                }
-                else if (priority >= this.operators.get(opStack.top()))
-                {
-                    while (!opStack.isEmpty() && priority >= this.operators.get(opStack.top()) && opStack.top() != ')')
-                    {
-                        this.postfix += opStack.pop();
-                    }
-                    opStack.push(c);
-                }
-            }
-
-            else if (Character.isDigit(c))
-            {
-                this.postfix += c;
-            }
-        }
-        while (!opStack.isEmpty())
-        {
-            this.postfix += opStack.pop();
-        }
-    }
-
-    /**
-     *
-     */
-    private void postfixToPrefix()
-    {
-        this.prefix = "";
-        char c, temp;
-        int priority;
-        CharacterStack opStack = new CharacterStack();
-        this.prefix = this.prefix.replaceAll("[\\s]", "");
-
-        for (int i = this.postfix.length() - 1; i >= 0; i--)
-        {
-            c = this.postfix.charAt(i);
-            if (this.operators.containsKey(c))
-            {
-                priority = this.operators.get(c);
-
-                if (!opStack.isEmpty())
-                {
-                    so.println(opStack.top());
-                }
-                if (opStack.isEmpty())
-                {
-                    opStack.push(c);
-                }
-                else if (priority < this.operators.get(opStack.top()))
-                {
-                    opStack.push(c);
-                }
-                else if (priority > this.operators.get(opStack.top()))
-                {
-                    while (!opStack.isEmpty() && priority <= this.operators.get(opStack.top()))
-                    {
-                        temp = opStack.pop();
-                        if (priority <= this.operators.get(temp))
-                        {
-                            this.postfix = temp + this.postfix;
-                        }
-                        else
-                        {
-                            this.postfix += temp;
-                        }
-                    }
-                    opStack.push(c);
-                }
-            }
-
-            else if (Character.isDigit(c))
-            {
-                this.prefix += c;
-            }
-        }
-        while (!opStack.isEmpty())
-        {
-            this.prefix = opStack.pop() + this.prefix;
-        }
-
-        so.println("+-*^1234//56+78");
-        so.println(this.prefix);
-        so.println();
-    }
-
     public void evalPostfix()
     {
         this.eval = 0;
