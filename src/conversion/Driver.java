@@ -5,8 +5,11 @@ import conversion.utils.SuperOutput;
 import java.io.*;
 
 /**
+ * Reads an input file line-by-line and converts each infix expression to postfix,
+ * checking for syntax errors, and then evaluates the postfix expression.
+ *
  * @author Horizonistic
- * @version 2.1
+ * @version 2.2
  */
 public class Driver
 {
@@ -27,7 +30,6 @@ public class Driver
             return;
         }
 
-
         String line;
         while ((line = br.readLine()) != null)
         {
@@ -36,7 +38,7 @@ public class Driver
             postfix.toPostfix();
             so.println(postfix.getPostfix());
 
-            if (postfix.getPostfix() != "")
+            if (postfix.getPostfix().equals(""))
             {
                 eval.evalPostfix(postfix.getPostfix());
                 so.println(eval.getEval());

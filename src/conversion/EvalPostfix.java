@@ -10,7 +10,7 @@ import java.util.Map;
  * Class to take a postfix expression and evaluate it
  *
  * @author Horizonistic
- * @version 2.1
+ * @version 2.2
  */
 public class EvalPostfix
 {
@@ -99,6 +99,8 @@ public class EvalPostfix
 
     /**
      * Returns the eval from the previous evaluation.
+     *
+     * @return  The eval
      */
     public int getEval()
     {

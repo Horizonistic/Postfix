@@ -5,13 +5,12 @@ import conversion.utils.SuperOutput;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 /**
  * A simple class to allow conversion from infix to postfix.
  *
  * @author Horizonistic
- * @version 2.1
+ * @version 2.2
  */
 public class InfixToPostfix
 {
@@ -24,8 +23,8 @@ public class InfixToPostfix
         OPERAND
     }
     private SuperOutput so;
-    private String infix;
-    private String postfix;
+    private String infix = "";
+    private String postfix = "";
     private Map<Character, Integer> operators = new HashMap<Character, Integer>()
     {{
         put('(', 1);
@@ -37,13 +36,18 @@ public class InfixToPostfix
         put('+', 4);
     }};
 
-    public InfixToPostfix(SuperOutput superOutput)
+    /**
+     * Constructor, requires SuperOutput to be able to print.
+     *
+     * @param so  SuperOutput for printing
+     */
+    public InfixToPostfix(SuperOutput so)
     {
-        this.so = superOutput;
+        this.so = so;
     }
 
     /**
-     *
+     * Converts infix expression to postfix.  This includes error-checking for unmatched parentheses and multiple consecutive operands and operators
      */
     public void toPostfix()
     {
@@ -144,26 +148,30 @@ public class InfixToPostfix
     }
 
     /**
+     * Sets the infix expression to be used by this.toPostfix().
      *
+     * @param input  The infix expression to set
      */
-    private void printPostfix()
-    {
-        so.println(this.postfix);
-    }
-
     public void setInfix(String input)
     {
         this.infix = input;
     }
 
     /**
+     * Returns the postfix expression
      *
+     * @return  The postfix expression
      */
     public String getPostfix()
     {
         return this.postfix;
     }
 
+    /**
+     * Builds and returns a map for keeping count of operators
+     *
+     * @return  The map for operator counting
+     */
     private Map buildMap()
     {
         Map<Character, Integer> charCount = new HashMap<Character, Integer>()
