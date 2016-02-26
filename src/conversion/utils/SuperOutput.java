@@ -6,7 +6,7 @@ package conversion.utils;
  *
  * @author Richard Stegman
  * @author Horizonistic
- * @version 1.1.4
+ * @version 1.2
  */
 import java.io.*;
 public class SuperOutput {
