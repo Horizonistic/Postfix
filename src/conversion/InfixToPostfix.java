@@ -13,13 +13,12 @@ import java.util.Scanner;
  * @author Horizonistic
  * @version 1.1
  */
-public class Postfix
+public class InfixToPostfix
 {
     private SuperOutput so;
     private Scanner in = new Scanner(System.in);
     private String infix;
     private String postfix;
-    private int eval;
     private Map<Character, Integer> operators = new HashMap<Character, Integer>()
     {{
         put('(', 1);
@@ -31,7 +30,7 @@ public class Postfix
         put('+', 4);
     }};
 
-    public Postfix(SuperOutput superOutput)
+    public InfixToPostfix(SuperOutput superOutput)
     {
         this.so = superOutput;
     }
@@ -45,8 +44,6 @@ public class Postfix
         //this.inputInfix();
         this.infixToPostfix();
         this.printPostfix();
-        this.evalPostfix();
-        this.printEval();
         return true;
     }
 
@@ -149,58 +146,6 @@ public class Postfix
     /**
      *
      */
-    public void evalPostfix()
-    {
-        this.eval = 0;
-        int op1;
-        int op2;
-        char c;
-        ObjectStack operands = new ObjectStack();
-
-        for (int i = 0; i < this.postfix.length(); i++)
-        {
-            c = this.postfix.charAt(i);
-            if (Character.isDigit(c))
-            {
-                operands.push(Character.getNumericValue(c));
-            }
-            else if (this.operators.containsKey(c))
-            {
-                op2 = (int) operands.pop();
-                op1 = (int) operands.pop();
-                switch (c)
-                {
-                    case '^':
-                        operands.push((int) (Math.pow(op1, op2)));
-                        break;
-
-                    case '*':
-                        operands.push(op1 * op2);
-                        break;
-
-                    case '/':
-                        operands.push(op1 / op2);
-                        break;
-
-                    case '-':
-                        operands.push(op1 - op2);
-                        break;
-
-                    case '+':
-                        operands.push(op1 + op2);
-                        break;
-                    default:
-                        so.println("WHAT");
-                        break;
-                }
-            }
-        }
-        this.eval = (int) operands.pop();
-    }
-
-    /**
-     *
-     */
     private void printPostfix()
     {
         so.println(this.postfix);
@@ -209,8 +154,8 @@ public class Postfix
     /**
      *
      */
-    private void printEval()
+    public String getPostfix()
     {
-        so.println(String.valueOf(this.eval));
+        return this.postfix;
     }
 }

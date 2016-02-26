@@ -14,21 +14,24 @@ public class Driver
         BufferedReader br;
         try
         {
-            br = new BufferedReader(new FileReader("input.txt"));
+            br = new BufferedReader(new FileReader("infix.txt"));
         }
         catch (FileNotFoundException e)
         {
-            System.err.println("File \"input.txt\" not found or cannot be opened.");
+            System.err.println("File \"infix.txt\" not found or cannot be opened.");
             return;
         }
 
         SuperOutput so = new SuperOutput("csis.txt");
-        Postfix postfix = new Postfix(so);
+        InfixToPostfix postfix = new InfixToPostfix(so);
+        EvalPostfix eval = new EvalPostfix(so);
 
         String line;
         while ((line = br.readLine()) != null)
         {
             postfix.toPostfix(line);
+            eval.evalPostfix(postfix.getPostfix());
+            eval.printEval();
         }
     }
 }
