@@ -6,11 +6,16 @@ import java.io.*;
 
 /**
  * @author Horizonistic
+ * @version 2.1
  */
 public class Driver
 {
     public static void main(String[] args) throws IOException
     {
+        SuperOutput so = new SuperOutput("csis.txt");
+        InfixToPostfix postfix = new InfixToPostfix(so);
+        EvalPostfix eval = new EvalPostfix(so);
+
         BufferedReader br;
         try
         {
@@ -22,17 +27,21 @@ public class Driver
             return;
         }
 
-        SuperOutput so = new SuperOutput("csis.txt");
-        InfixToPostfix postfix = new InfixToPostfix(so);
-        EvalPostfix eval = new EvalPostfix(so);
 
         String line;
         while ((line = br.readLine()) != null)
         {
-            so.printlnFile(line);
-            postfix.toPostfix(line);
-            eval.evalPostfix(postfix.getPostfix());
-            so.println(eval.getEval());
+            so.println(line);
+            postfix.setInfix(line);
+            postfix.toPostfix();
+            so.println(postfix.getPostfix());
+
+            if (postfix.getPostfix() != "")
+            {
+                eval.evalPostfix(postfix.getPostfix());
+                so.println(eval.getEval());
+            }
+            so.println();
         }
 
         so.close();

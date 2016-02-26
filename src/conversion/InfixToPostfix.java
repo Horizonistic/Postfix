@@ -8,15 +8,22 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
- * A simple class to allow conversion from infix to postfix.  Handles all input and output with private methods.
+ * A simple class to allow conversion from infix to postfix.
  *
  * @author Horizonistic
- * @version 1.1
+ * @version 2.1
  */
 public class InfixToPostfix
 {
+    // I just learned about enums in C++ and wanted use them.
+    // Maybe unnecessary, but I think they're cool.
+    private enum CharNames
+    {
+        NONE,
+        OPERATOR,
+        OPERAND
+    }
     private SuperOutput so;
-    private Scanner in = new Scanner(System.in);
     private String infix;
     private String postfix;
     private Map<Character, Integer> operators = new HashMap<Character, Integer>()
@@ -36,26 +43,18 @@ public class InfixToPostfix
     }
 
     /**
-     * @return boolean  Whether or not it succeeded.
-     */
-    public boolean toPostfix(String input)
-    {
-        this.infix = input;
-        //this.inputInfix();
-        this.infixToPostfix();
-        this.printPostfix();
-        return true;
-    }
-
-    /**
      *
      */
-    private void infixToPostfix()
+    public void toPostfix()
     {
         this.postfix = "";
         char c;
         int priority;
+
         ObjectStack opStack = new ObjectStack();
+        Map<Character, Integer> charCount = this.buildMap();
+        CharNames lastChar = CharNames.NONE;
+
         this.infix = this.infix.replaceAll("[\\s]", "");
 
         for (int i = 0; i < this.infix.length(); i++)
@@ -63,7 +62,23 @@ public class InfixToPostfix
             c = this.infix.charAt(i);
             if (this.operators.containsKey(c))
             {
+                // If multiple operators
+                if (c != '(' && c != ')')
+                {
+                    if (lastChar == CharNames.OPERATOR)
+                    {
+                        so.println("Invalid expression: multiple operators in a row");
+                        this.postfix = "";
+                        return;
+                    }
+                    else
+                    {
+                        lastChar = CharNames.OPERATOR;
+                    }
+                }
+
                 priority = this.operators.get(c);
+                charCount.put(c, charCount.get(c) + 1);
 
                 if (c == ')')
                 {
@@ -93,12 +108,35 @@ public class InfixToPostfix
                     opStack.push(c);
                 }
             }
-
             else if (Character.isDigit(c))
             {
+                if (lastChar == CharNames.OPERAND)
+                {
+                    so.println("Invalid expression: multiple operands in a row");
+                    this.postfix = "";
+                    return;
+                }
+                else
+                {
+                    lastChar = CharNames.OPERAND;
+                }
                 this.postfix += c;
             }
         }
+
+        if (charCount.get('(') > charCount.get(')'))
+        {
+            so.println("Invalid expression: unmatched parenthesis.  Extra opening parenthesis.");
+            this.postfix = "";
+            return;
+        }
+        else if (charCount.get('(') < charCount.get(')'))
+        {
+            so.println("Invalid expression: unmatched parenthesis.  Extra closing parenthesis.");
+            this.postfix = "";
+            return;
+        }
+
         while (!opStack.isEmpty())
         {
             this.postfix += opStack.pop();
@@ -113,11 +151,31 @@ public class InfixToPostfix
         so.println(this.postfix);
     }
 
+    public void setInfix(String input)
+    {
+        this.infix = input;
+    }
+
     /**
      *
      */
     public String getPostfix()
     {
         return this.postfix;
+    }
+
+    private Map buildMap()
+    {
+        Map<Character, Integer> charCount = new HashMap<Character, Integer>()
+        {{
+            put('(', 0);
+            put(')', 0);
+            put('^', 0);
+            put('*', 0);
+            put('/', 0);
+            put('-', 0);
+            put('+', 0);
+        }};
+        return charCount;
     }
 }

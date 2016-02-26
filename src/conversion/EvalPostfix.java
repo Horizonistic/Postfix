@@ -7,7 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Infernous on 2/26/2016.
+ * Class to take a postfix expression and evaluate it
+ *
+ * @author Horizonistic
+ * @version 2.1
  */
 public class EvalPostfix
 {
@@ -88,7 +91,10 @@ public class EvalPostfix
                 }
             }
         }
-        this.eval = (int) operands.pop();
+        if (!operands.isEmpty())
+        {
+            this.eval = (int) operands.pop();
+        }
     }
 
     /**
