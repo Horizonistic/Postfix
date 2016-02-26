@@ -84,6 +84,7 @@ public class InfixToPostfix
                 priority = this.operators.get(c);
                 charCount.put(c, charCount.get(c) + 1);
 
+                // If ending parenthesis, pop until opening is found
                 if (c == ')')
                 {
                     while (!opStack.isEmpty() && ((char) opStack.top() != '('))
@@ -99,11 +100,11 @@ public class InfixToPostfix
                 {
                     opStack.push(c);
                 }
-                else if (priority < this.operators.get(opStack.top()))
+                else if (priority < this.operators.get(opStack.top())) // If incoming has higher priority than top of stack
                 {
                     opStack.push(c);
                 }
-                else if (priority >= this.operators.get(opStack.top()))
+                else if (priority >= this.operators.get(opStack.top())) // If incoming has less or equal priority to top of stack
                 {
                     while (!opStack.isEmpty() && priority >= this.operators.get(opStack.top()) && ((char) opStack.top() != '('))
                     {
@@ -114,6 +115,7 @@ public class InfixToPostfix
             }
             else if (Character.isDigit(c))
             {
+                // If multiple operands
                 if (lastChar == CharNames.OPERAND)
                 {
                     so.println("Invalid expression: multiple operands in a row");
