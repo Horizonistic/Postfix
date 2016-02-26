@@ -29,9 +29,12 @@ public class Driver
         String line;
         while ((line = br.readLine()) != null)
         {
+            so.printlnFile(line);
             postfix.toPostfix(line);
             eval.evalPostfix(postfix.getPostfix());
-            eval.printEval();
+            so.println(eval.getEval());
         }
+
+        so.close();
     }
 }

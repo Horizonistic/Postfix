@@ -25,13 +25,20 @@ public class EvalPostfix
         put('+', 4);
     }};
 
+    /**
+     * Constructor, requires SuperOutput to be able to print the eval.
+     *
+     * @param so  SuperOutput for printing
+     */
     public EvalPostfix(SuperOutput so)
     {
         this.so = so;
     }
 
     /**
+     * Uses a stack to evaluate a postfix expression.
      *
+     * @param postfix  The postfix expression to evaluate
      */
     public void evalPostfix(String postfix)
     {
@@ -74,6 +81,7 @@ public class EvalPostfix
                     case '+':
                         operands.push(op1 + op2);
                         break;
+
                     default:
                         so.println("WHAT");
                         break;
@@ -84,10 +92,10 @@ public class EvalPostfix
     }
 
     /**
-     *
+     * Returns the eval from the previous evaluation.
      */
-    public void printEval()
+    public int getEval()
     {
-        this.so.println(this.eval);
+        return this.eval;
     }
 }

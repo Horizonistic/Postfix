@@ -50,44 +50,6 @@ public class InfixToPostfix
     /**
      *
      */
-    private void inputInfix()
-    {
-        do
-        {
-            this.so.println("Please enter an infix-formatted expression (enter \"skip\" to skip): ");
-            if (this.in.hasNextLine())
-            {
-                String input = this.in.nextLine();
-                if (!input.equalsIgnoreCase("skip"))
-                {
-                    if (input.replaceAll("[[0-9]\\s\\(\\)\\+\\-\\*\\/]", "").length() == 0)
-                    {
-                        this.so.printlnFile(input);
-                        input = input.replaceAll("\\s", "");
-                        this.infix = input;
-                        return;
-                    }
-                    else
-                    {
-                        this.so.println("That contained invalid characters.  Enter \"skip\" to skip.");
-                    }
-                }
-                else
-                {
-                    return;
-                }
-            }
-            else
-            {
-                this.so.println("That was not a valid string.  Please try again or enter \"skip\" to skip.");
-                this.in.nextLine();
-            }
-        } while (true);
-    }
-
-    /**
-     *
-     */
     private void infixToPostfix()
     {
         this.postfix = "";
